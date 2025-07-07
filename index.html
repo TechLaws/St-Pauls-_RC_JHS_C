@@ -1004,7 +1004,7 @@
             </div>
             <div class="login-header">
                 <img src="https://imgur.com/pd0P4zq.png" alt="Login Logo">
-                <h2>Welcome To Class D</h2>
+                <h2>Welcome To Class C</h2>
                 <p>Sign in to access your account</p>
             </div>
             <div class="login-error" id="loginError">
@@ -1165,9 +1165,21 @@
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const username = document.getElementById('username').value;
+                const username = document.getElementById('username').value.trim();
                 const password = document.getElementById('password').value;
                 const role = document.getElementById('role').value;
+                
+                // Debug logging to help troubleshoot
+                console.log('Login attempt for JHS C:', {
+                    username: `"${username}"`,
+                    password: `"${password}"`,
+                    role: `"${role}"`
+                });
+                console.log('Expected:', {
+                    username: '"admin"',
+                    password: '"Stpauls@AD!"',
+                    role: '"admin"'
+                });
                 
                 // Simple validation - in a real app, this would be server-side
                 if ((username === 'admin' && password === 'Stpauls@AD!' && role === 'admin') || 
@@ -1635,16 +1647,19 @@
             createLoginBubbles();
             
             // Toggle password visibility
-            document.querySelector('.form-icon').addEventListener('click', function() {
-                const passwordInput = document.getElementById('password');
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    this.textContent = '👁️';
-                } else {
-                    passwordInput.type = 'password';
-                    this.textContent = '🔒';
-                }
-            });
+            const passwordIcon = document.querySelector('.form-group:nth-child(2) .form-icon');
+            if (passwordIcon) {
+                passwordIcon.addEventListener('click', function() {
+                    const passwordInput = document.getElementById('password');
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        this.textContent = '👁️';
+                    } else {
+                        passwordInput.type = 'password';
+                        this.textContent = '🔒';
+                    }
+                });
+            }
             
             // Handle touch events for improved mobile experience
             document.addEventListener('touchstart', function() {
@@ -1654,7 +1669,3 @@
     </script>
 </body>
 </html>
-
-
-
-
